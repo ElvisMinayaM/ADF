@@ -6,12 +6,12 @@ Al final de cada día ocurre lo siguiente:
 - Un bicho del tipo A produce como bebes a un bicho del tipo A, tres bichos del tipo B y un bicho de tipo C.
 - Un bicho del tipo B produce como bebes a dos bichos de tipo B y dos bichos de tipo C.
 - Un bicho del tipo C produce como bebes a un bicho de tipo A y cuatro bichos de tipo C.
-Los bebes maduran rápido y sus propios bebes nacerán al siguiente día de haber nacido ellos. Por si fuera poco, los bichos que ya tenías nunca morirán y seguirán teniendo bebes cada día.
+Los bebes maduran rápido y sus propios bebes nacerán al siguiente día de haber nacido ellos. Por si fuera poco, los bichos que ya tenías nunca morirán y seguirán teniendo 
+bebes cada día.
 Si comienzas con N bichos de tipo A ¿Cuántos bichos tendrás en total después de D días?
 
 ENTRADA
-Dos enteros N,D. Puedes suponer que N,D >=0.
-
+Dos enteros N,D. Puedes suponer que N,D>=0.
 SALIDA
 Un entero que sea el número total de bichos tras D días. Puedes suponer que el resultado cabe en un int.
 
