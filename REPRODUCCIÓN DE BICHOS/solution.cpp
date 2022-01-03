@@ -18,11 +18,8 @@ int contarBichos(int A,int B,int C,int D){
 		contarBichos(A+AA,B+BB,C+CC,D-1);
 	}
 }
-
 int main(){
 	int N,D;
 	cin>>N>>D;
 	cout<<contarBichos(N,0,0,D);
 }
-
-
