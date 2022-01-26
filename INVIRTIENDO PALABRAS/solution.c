@@ -2,7 +2,7 @@
 
 int main(){
 	int i,j,inicio=0,fin,p;
-	char aux,C[1000]="hola,saludos,como,estan";
+	char aux,C[1000];
 	scanf("%s",&C);
 	for(i=0;C[i]!='\0';i++){
 		if(C[i]==',' || C[i+1]=='\0'){
