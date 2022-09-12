@@ -1,0 +1,234 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+void mostrar_matriz(char T[4][4]){
+	for(int i=0;i<4;i++){
+		cout<<"  ";
+		for(int j=0;j<4;j++) cout<<"["<<T[i][j]<<"]";
+		cout<<endl;	
+	}
+}
+
+bool evaluar_ganador(char T[4][4]){
+	for(int i=0;i<4;i++){
+		for(int j=0;j<4;j++){
+			if(T[i][j]==' ') return false;
+		}	
+	}
+	return true;
+}
+
+void llenar_matriz(char T[4][4]){
+	char l;
+	bool existe;
+	int I,J;
+	for(int i=0;i<4;i++) for(int j=0;j<4;j++) T[i][j]=' ';
+	for(int i=0;i<8;i++){
+		do{
+			l='A'+rand()%(('Z'-'A')+1);
+			existe=false;
+			for(int x=0;x<4;x++) for(int z=0;z<4;z++) if(l==T[x][z]) existe=true;
+			if(!existe) break;
+		}while(1);	
+		do{
+			I=rand()%(3-0+1)+0;
+			J=rand()%(3-0+1)+0;
+			if(T[I][J]==' ') break;
+		}while(1);
+		T[I][J]=l;
+		do{
+			I=rand()%(3-0+1)+0;
+			J=rand()%(3-0+1)+0;
+			if(T[I][J]==' ') break;
+		}while(1);
+		T[I][J]=l;	
+	}
+}
+
+bool evaluar(char T[4][4],char V[4][4],int f1,int c1,int f2,int c2){
+	if(T[f1][c1]==T[f2][c2]){
+		if(V[f1][c1]==' ' && V[f2][c2]==' '){
+			V[f1][c1]=T[f1][c1];
+			V[f2][c2]=T[f2][c2];
+			for(int i=0;i<4;i++){
+				cout<<"  ";
+				for(int j=0;j<4;j++){
+					cout<<"["<<V[i][j]<<"]";
+				}
+				cout<<endl;	
+			}
+			cout<<endl<<"  > !EXITO! LAS CARTAS COINCIDEN <"<<endl;
+			return true;
+		}
+		else{
+			cout<<endl<<"  > ESAS CARTAS YA HAN SIDO DESCUBIERTAS <"<<endl;
+			return false;
+		}
+	}
+	else{
+		for(int i=0;i<4;i++){
+			cout<<"  ";
+			for(int j=0;j<4;j++){
+				if(i==f1 && j==c1) cout<<"["<<T[i][j]<<"]";
+				else if(i==f2 && j==c2) cout<<"["<<T[i][j]<<"]";
+				else cout<<"["<<V[i][j]<<"]";
+			}
+			cout<<endl;	
+		}
+		cout<<endl<<"  > LAS CARTAS NO COINCIDEN <"<<endl;
+		return false;
+	}
+}
+
+void menu(){
+	bool r;
+	int opcion;
+	int f1,f2,c1,c2;
+	char T[4][4],V[4][4];
+	for(int i=0;i<4;i++) for(int j=0;j<4;j++) V[i][j]=' ';
+	
+	int J1=0,J2=0;
+	string n1,n2;
+	
+	do{
+		llenar_matriz(T);
+		system("cls");
+		system("color 1F");
+		cout<<endl;
+		cout<<"  > MEMORAMA <"<<endl;
+		cout<<endl;
+		cout<<"  [1]: JUGAR"<<endl;
+		cout<<"  [2]: SALIR"<<endl;
+		cout<<endl;
+		cout<<"  Digite opcion: ";
+		cin>>opcion;
+		
+		if(opcion==1){
+			system("cls");
+			cout<<endl;
+			cout<<"  > JUGAR <"<<endl;
+			cout<<endl;	
+			cout<<"  Digite nombre del jugador 1: ";
+			cin>>n1;
+			cout<<"  Digite nombre del jugador 2: ";
+			cin>>n2;
+			
+			do{
+				system("cls");
+				system("color 5F");
+				cout<<endl;
+				cout<<"  > TURNO DEL JUGADOR "<<n1<<" - Puntaje = "<<J1<<" <"<<endl;
+				cout<<endl;
+				mostrar_matriz(V);
+				cout<<endl<<endl;
+				cout<<"  PRIMERA CARTA"<<endl;
+				do{
+					cout<<"  Digite fila     (0-3) : ";
+					cin>>f1;
+				}while(f1<0 || f1>3);
+				do{
+					cout<<"  Digite columnas (0-3) : ";
+					cin>>c1;
+				}while(c1<0 || c1>3);
+				
+				cout<<endl;
+				cout<<"  SEGUNDA CARTA"<<endl;
+				do{
+					cout<<"  Digite fila     (0-3) : ";
+					cin>>f2;
+				}while(f2<0 || f2>3);
+				do{
+					cout<<"  Digite columnas (0-3) : ";
+					cin>>c2;
+				}while(c2<0 || c2>3);
+				
+				
+				system("cls");
+				cout<<endl;
+				cout<<"  > TURNO DEL JUGADOR "<<n1<<" <"<<endl;
+				cout<<endl;
+				r=evaluar(T,V,f1,c1,f2,c2);
+				if(r) J1+=1;
+				
+				if(evaluar_ganador(V)){
+					system("cls");
+					system("color 5F");
+					cout<<endl;
+					cout<<"  > !GANASTE "<<n1<<"!"<<endl;
+					cout<<endl;
+					mostrar_matriz(V);
+					cout<<endl;
+					return;
+				}
+				
+				cout<<endl<<endl<<"  ";
+				system("pause");
+				
+				//AQUI JUEGA EL JUGADOR 2
+				system("cls");
+				system("color 3F");
+				cout<<endl;
+				cout<<"  > TURNO DEL JUGADOR "<<n2<<" - PUNTAJE = "<<J2<<" <"<<endl;
+				cout<<endl;
+				mostrar_matriz(V);
+				cout<<endl<<endl;
+				cout<<"  PRIMERA CARTA"<<endl;
+				do{
+					cout<<"  Digite fila     (0-3) : ";
+					cin>>f1;
+				}while(f1<0 || f1>3);
+				do{
+					cout<<"  Digite columnas (0-3) : ";
+					cin>>c1;
+				}while(c1<0 || c1>3);
+				
+				cout<<endl;
+				cout<<"  SEGUNDA CARTA"<<endl;
+				do{
+					cout<<"  Digite fila     (0-3) : ";
+					cin>>f2;
+				}while(f2<0 || f2>3);
+				do{
+					cout<<"  Digite columnas (0-3) : ";
+					cin>>c2;
+				}while(c2<0 || c2>3);
+				
+				
+				system("cls");
+				cout<<endl;
+				cout<<"  > TURNO DEL JUGADOR "<<n2<<" <"<<endl;
+				cout<<endl;
+				r=evaluar(T,V,f1,c1,f2,c2);
+				if(r) J2+=1;
+				
+				if(evaluar_ganador(V)){
+					system("cls");
+					system("color 3F");
+					cout<<endl;
+					cout<<"  > !GANASTE "<<n2<<"!"<<endl;
+					cout<<endl;
+					mostrar_matriz(V);
+					cout<<endl;
+					return;
+				}
+				
+				cout<<endl<<endl<<"  ";
+				system("pause");
+			}while(1);
+			
+		}
+		
+		cout<<endl<<endl<<"  ";
+		system("pause");
+	}while(opcion!=3);
+}
+
+int main(){
+	srand(time(NULL));
+	
+	menu();  
+	
+	return 0;
+}
